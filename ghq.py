@@ -5,12 +5,13 @@ import dotbot
 
 
 class Ghq(dotbot.Plugin):
-    '''
+    """
     Clone remote git repositories using 'ghq get' and 'ghq import'
-    '''
+    """
+
     def __init__(self, context):
         super(Ghq, self).__init__(context)
-        self._directives = {'ghq': self._get, 'ghqfile': self._import}
+        self._directives = {"ghq": self._get, "ghqfile": self._import}
 
     # Dotbot methods
 
@@ -36,19 +37,19 @@ class Ghq(dotbot.Plugin):
 
     def _get(self, repo):
         self._run(
-            'ghq get {}'.format(repo),
-            'Cloning {}'.format(repo),
-            'Failed to clone {}'.format(repo),
+            "ghq get {}".format(repo),
+            "Cloning {}".format(repo),
+            "Failed to clone {}".format(repo),
         )
 
     def _import(self, filename):
         if not os.path.isfile(filename):
-            raise ValueError('Repo file not found: {}'.format(filename))
+            raise ValueError("Repo file not found: {}".format(filename))
 
         self._run(
-            'ghq import < {}'.format(filename),
-            'Importing {}'.format(filename),
-            'Failed to import {}'.format(filename),
+            "ghq import < {}".format(filename),
+            "Importing {}".format(filename),
+            "Failed to import {}".format(filename),
         )
 
     def _run(self, command, message=None, error_message=None):
@@ -59,6 +60,6 @@ class Ghq(dotbot.Plugin):
 
         if result != 0:
             if error_message is None:
-                error_message = 'Command failed: {}'.format(command)
+                error_message = "Command failed: {}".format(command)
 
             raise ValueError(error_message)
