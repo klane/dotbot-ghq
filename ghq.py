@@ -8,20 +8,19 @@ class Ghq(dotbot.Plugin):
     '''
     Clone remote git repositories using 'ghq get' and 'ghq import'
     '''
-    _supported_directives = ['ghq', 'ghqfile']
+    def __init__(self, context):
+        super(Ghq, self).__init__(context)
+        self._directives = {'ghq': self._get, 'ghqfile': self._import}
 
     # Dotbot methods
 
     def can_handle(self, directive):
-        return directive in self._supported_directives
+        return directive in self._directives
 
     def handle(self, directive, data):
         try:
             for entry in data:
-                if directive == 'ghq':
-                    self._get(entry)
-                elif directive == 'ghqfile':
-                    self._import(entry)
+                self._directives[directive](entry)
             return True
         except ValueError as e:
             self._log.error(e)
