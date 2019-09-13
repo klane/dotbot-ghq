@@ -37,22 +37,36 @@ class Ghq(dotbot.Plugin):
 
     # Inner methods
 
-    def _get(self, repo):
+    def _get(self, data):
+        repo, flags = self._parse(data, "repo")
+
         self._run(
-            "ghq get {} {}".format(' '.join(self._default_flags), repo),
+            "ghq get {} {}".format(flags, repo),
             "Cloning {}".format(repo),
             "Failed to clone {}".format(repo),
         )
 
-    def _import(self, filename):
+    def _import(self, data):
+        filename, flags = self._parse(data, "file")
+
         if not os.path.isfile(filename):
             raise ValueError("Repo file not found: {}".format(filename))
 
         self._run(
-            "ghq import {} < {}".format(' '.join(self._default_flags), filename),
+            "ghq import {} < {}".format(flags, filename),
             "Importing {}".format(filename),
             "Failed to import {}".format(filename),
         )
+
+    def _parse(self, data, key):
+        if type(data) is dict:
+            value = data[key]
+            flags = data.get("flags", self._default_flags)
+        else:
+            value = data
+            flags = self._default_flags
+
+        return value, " ".join(flags)
 
     def _run(self, command, message=None, error_message=None):
         if message is not None:
