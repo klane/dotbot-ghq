@@ -61,7 +61,7 @@ class Ghq(dotbot.Plugin):
     def _parse(self, data, key):
         if type(data) is dict:
             if key not in data:
-                raise ValueError("Key {} not found in {}".format(key, data))
+                raise ValueError("Key '{}' not found in {}".format(key, data))
 
             value = data[key]
             flags = data.get("flags", self._default_flags)
