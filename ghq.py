@@ -1,3 +1,4 @@
+import os
 import subprocess
 
 import dotbot
@@ -42,6 +43,9 @@ class Ghq(dotbot.Plugin):
         )
 
     def _import(self, filename):
+        if not os.path.isfile(filename):
+            raise ValueError('Repo file not found: {}'.format(filename))
+
         self._run(
             'ghq import < {}'.format(filename),
             'Importing {}'.format(filename),
