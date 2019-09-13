@@ -16,10 +16,11 @@ class Ghq(dotbot.Plugin):
 
     def handle(self, directive, data):
         try:
-            if directive == 'ghq':
-                self._get(data)
-            elif directive == 'ghqfile':
-                self._import(data)
+            for entry in data:
+                if directive == 'ghq':
+                    self._get(entry)
+                elif directive == 'ghqfile':
+                    self._import(entry)
             return True
         except ValueError as e:
             self._log.error(e)
@@ -33,21 +34,19 @@ class Ghq(dotbot.Plugin):
 
     # Inner methods
 
-    def _get(self, data):
-        for repo in data:
-            self._run(
-                "ghq get {}".format(repo),
-                "Cloning {}".format(repo),
-                "Failed to clone {}".format(repo),
-            )
+    def _get(self, repo):
+        self._run(
+            "ghq get {}".format(repo),
+            "Cloning {}".format(repo),
+            "Failed to clone {}".format(repo),
+        )
 
-    def _import(self, data):
-        for filename in data:
-            self._run(
-                'ghq import < {}'.format(filename),
-                'Importing {}'.format(filename),
-                'Failed to import {}'.format(filename),
-            )
+    def _import(self, filename):
+        self._run(
+            'ghq import < {}'.format(filename),
+            'Importing {}'.format(filename),
+            'Failed to import {}'.format(filename),
+        )
 
     def _run(self, command, message=None, error_message=None):
         if message is not None:
