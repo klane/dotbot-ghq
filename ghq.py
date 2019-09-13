@@ -63,6 +63,10 @@ class Ghq(dotbot.Plugin):
             if key not in data:
                 raise ValueError("Key '{}' not found in {}".format(key, data))
 
+            if "flags" not in data:
+                self._log.warning("Key 'flags' not found in {}".format(data))
+                self._log.warning("Using default flags {}".format(self._default_flags))
+
             value = data[key]
             flags = data.get("flags", self._default_flags)
         else:
