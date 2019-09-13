@@ -9,6 +9,8 @@ class Ghq(dotbot.Plugin):
     Clone remote git repositories using 'ghq get' and 'ghq import'
     """
 
+    _default_flags = ["--silent"]
+
     def __init__(self, context):
         super(Ghq, self).__init__(context)
         self._directives = {"ghq": self._get, "ghqfile": self._import}
@@ -37,7 +39,7 @@ class Ghq(dotbot.Plugin):
 
     def _get(self, repo):
         self._run(
-            "ghq get {}".format(repo),
+            "ghq get {} {}".format(' '.join(self._default_flags), repo),
             "Cloning {}".format(repo),
             "Failed to clone {}".format(repo),
         )
@@ -47,7 +49,7 @@ class Ghq(dotbot.Plugin):
             raise ValueError("Repo file not found: {}".format(filename))
 
         self._run(
-            "ghq import < {}".format(filename),
+            "ghq import {} < {}".format(' '.join(self._default_flags), filename),
             "Importing {}".format(filename),
             "Failed to import {}".format(filename),
         )
