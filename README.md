@@ -21,7 +21,7 @@ git submodule add https://github.com/klane/dotbot-ghq.git
 The plugin adds two new directives for use with `ghq`:
 
 - `ghq`: List of repositories to clone with `ghq get`
-- `ghqfile`: List of files containing repositories (one per line) to clone with `ghq import`
+- `ghqfile`: List of files containing repositories (one per line) to clone with `ghq get`
 
 For example:
 

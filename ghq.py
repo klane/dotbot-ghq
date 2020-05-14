@@ -6,7 +6,7 @@ import dotbot
 
 class GHQ(dotbot.Plugin):
     """
-    Clone remote git repositories using 'ghq get' and 'ghq import'
+    Clone remote git repositories using 'ghq get'
     """
 
     _default_flags = ["--silent"]
@@ -53,7 +53,7 @@ class GHQ(dotbot.Plugin):
             raise ValueError("Repo file not found: {}".format(filename))
 
         self._run(
-            "ghq import {} < {}".format(flags, filename),
+            "ghq get {} < {}".format(flags, filename),
             "Importing {}".format(filename),
             "Failed to import {}".format(filename),
         )
