@@ -4,7 +4,7 @@ import subprocess
 import dotbot
 
 
-class Ghq(dotbot.Plugin):
+class GHQ(dotbot.Plugin):
     """
     Clone remote git repositories using 'ghq get' and 'ghq import'
     """
@@ -12,7 +12,7 @@ class Ghq(dotbot.Plugin):
     _default_flags = ["--silent"]
 
     def __init__(self, context):
-        super(Ghq, self).__init__(context)
+        super(GHQ, self).__init__(context)
         self._directives = {"ghq": self._get, "ghqfile": self._import}
 
     # Dotbot methods
